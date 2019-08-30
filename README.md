@@ -7,4 +7,6 @@
 
 ### (3) YOLOv3: An Incremental Improvement (2018)
 
-### (4) OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields (2018)
+### (4) PoseFix: Model-agnostic General Human Pose Refinement Network (2018)
+
+### (5) OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields (2018)
