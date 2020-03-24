@@ -2,7 +2,10 @@
 ## Momentum Contrast for Unsupervised Visual Representation Learning
 
 ### version 1
-
+Contribution
+    - Enable building a large and consistent dictionary on-the-fly that facilitates contrastive unsupervised learning
+    - Outperform its supervised pre-training counterpart in 7 detection/segmentation tasks on PASCAL VOC, COCO, and other datasets, sometimes surpassing it by large margins
+    - The gap between unsupervised and supervised representation learning has been largely closed
 #### 3. Method
 ##### Contrastive Learning as Dictionary Look-up
 - Dictionary Look-up
@@ -34,5 +37,12 @@
 
 
 ### version 2 (Tech Report)
-
-#### Experiments
+- Verify the effectiveness of two of SimCLR’s design improvements by implementing them in the MoCo framework
+#### 3. Experiments
+- Settings
+- MLP head
+    - Replace the fc head in MoCo with a 2-layer MLP head(hidden layer 2048-d, with ReLU)
+- Augmentation
+    - Original augmentation + blur augmentation
+- Comparison with SimCLR
+    - Outperform SimCLR
