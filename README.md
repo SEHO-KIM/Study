@@ -1,6 +1,5 @@
-# Study
+# paper-review
 
-## 1. Paper
 ### (1) SSD: Single Shot MultiBox Detector (2015)
     Accepted by ECCV 2016
 
