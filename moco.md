@@ -1,7 +1,7 @@
 # MoCo
 ## Momentum Contrast for Unsupervised Visual Representation Learning
 
-### version 1 [[paper]](https://arxiv.org/abs/1911.05722)
+### version 1 [[Paper]](https://arxiv.org/abs/1911.05722)
 - Contribution
     - Enable building a large and consistent dictionary on-the-fly that facilitates contrastive unsupervised learning
     - Outperform its supervised pre-training counterpart in 7 detection/segmentation tasks on PASCAL VOC, COCO, and other datasets, sometimes surpassing it by large margins

@@ -1,11 +1,19 @@
 # SimCLR
-## A Simple Framework for Contrastive Learning of Visual Representations
+## A Simple Framework for Contrastive Learning of Visual Representations [[Paper]](https://arxiv.org/abs/2002.05709)
 - Contribution
     - Composition of data augmentations plays a critical role in defining effective predictive tasks
     - Introducing a learnable nonlinear transformation between the representation and the contrastive loss substantially improves the quality of the learned representations
     - Contrastive learning benefits from larger batch sizes and more training steps compared to supervised learning
 ### 2. Method
 #### The Contrastive Learning Framework
+- Maximize agreement between differently augmented views of the same data example via a contrastive loss in the latent space
+- Major components
+    - Stochastic data augmentation module
+        - Random crop&resize, random color distortions, and random gaussian blur
+        - Resulting in two correlated views of the same example
+    - Neural network base encoder: ResNet(the output after the average pooling layer)
+    - Neural network projection head
+    - Contrastive loss function
 #### Training with Large Batch Size
 - Global BN
 #### Evaluation Protocol
