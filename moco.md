@@ -30,12 +30,24 @@
     - ResNet as the encoder(output vector is normalized by its L2-norm)
     - The temperature τ is set as 0.07
 - Shuffling BN
-
 #### 4. Experiments
+- Dataset
+    - ImageNet-1M(IN-1M), Instagram-1B(IG-1B)
+- Training
+    - ResNet50
+    - SGD optimizer (weight decay 0.0001, momentum 0.9)
+    - IN-1M
+        - Batch size: 256 in 8 GPUs
+        - Initial learning rate: 0.03
+        - Learning step: 120, 160 (total 200 epochs, learning decay 0.1)
+    - IG-1B
+        - Batch size: 1024 in 64 GPUs
+        - Initial learning rate: 0.12
+        - Learning step: exponentially decayed by 0.9x after every 62.5k iterations (64M images)
 ##### Linear Classification Protocol
 ##### Transferring Features
 
-
+---
 ### version 2 (Tech Report)
 - Verify the effectiveness of two of SimCLR’s design improvements by implementing them in the MoCo framework
 #### 3. Experiments
