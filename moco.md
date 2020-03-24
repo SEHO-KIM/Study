@@ -2,7 +2,7 @@
 ## Momentum Contrast for Unsupervised Visual Representation Learning
 
 ### version 1
-Contribution
+- Contribution
     - Enable building a large and consistent dictionary on-the-fly that facilitates contrastive unsupervised learning
     - Outperform its supervised pre-training counterpart in 7 detection/segmentation tasks on PASCAL VOC, COCO, and other datasets, sometimes surpassing it by large margins
     - The gap between unsupervised and supervised representation learning has been largely closed
