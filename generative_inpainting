@@ -1,0 +1,47 @@
+# Generative Inpainting
+## Generative Image Inpainting with Contextual Attention
+[[paper]](https://arxiv.org/abs/1801.07892)
+- Abstract
+    - Deep learning을 기반으로 한 inpainting 기법들은 유의미한 결과들을 만들어냈다. 하지만 주변 영역들과 일치하지 않거나 blur 현상이 발생한다.
+    - 전통적인 inpainting은 주변의 texture을 가지고 맞추는 기법인데, 이를 착안해 주변의 texture와 structure를 반영한 방식을 제안한다.
+    - 임의의 위치에서 여러개의 빈공간을 prediction(inpainting) 할 수 있다.
+- Improved Generative Inpainting Network
+    - Coarse-to-fine network architecture
+        - 흰 직사각형 hole(or missing pixels)이 random하게 여러개 있는 image(z; 256x256)와 그 hole에 해당하는 영역을 나타낸 binary mask(m)가 input pair가 되고, hole을 inpainting한 이미지가 output(x̃)이 된다.
+        - Receptive field를 크게 하고 안정된 학습을 위해서 stage coarse-to-fine network architecture(dilated conv)를 제안했다.
+            - 첫번째 network에서 coarse prediction하고, 두번째 network에서 refined results를 만들어낸다.
+            - Coarse network에서는 reconstruction loss를, refinement network에서는 reconstruction loss와 GAN loss를 취한다.
+            - Details
+                - Parameter를 줄여 효율을 높임
+                - CNN에서는 mirror padding을 사용하고 batch norm 제거
+                - Activation function은 ReLU대신 ELU 사용
+                - Clip the output filter values instead of using tanh or sigmoid functions(*)
+    - Global and local Wasserstein GANs
+        - WGAN의 gradient penalty term에서 mask 적용
+        - x와 x̃을 sampling한 x̂
+    - Spatially discounted reconstruction loss
+        - Mask의 pixel과 mask 경계 밖의 가장 가까운 pixel 간 거리(l)에 따라 weight(γ^l)를 매긴다.(mask 경계 부분이 mask 안쪽보다 모호함이 적기 때문)
+        - Pixel-wise L1 reconstruction loss
+    - 다른 inpainting model보다 수렴이 빠르다.
+- Image Inpainting with Contextual Attention
+    - Contextual Attention
+        - Distant spatial한 위치의 feature을 가져오기에는 local 성향인 CNN은 비 효율적이므로 attention mechanism을 사용한다.
+        - Foreground(missing pixels)와 background(surroundings) feature를 각각 추출하고 attention score를 구한다.
+        - Background feature를 deconv해서 foreground를 reconstruction한다. (*)
+        - Foreground와 background가 일관성이 있기 때문에 attention map을 kernel 영역만큼 propagation한다. (*)
+        - 메모리 효율성을 위해 1) filter에 stride를 사용한다. 2) foreground를 downscaling한다. (*)
+    - Unified Inpainting Network
+        - 두 개의 encoder에서 나오는 feature들을 concat해서 decoder에 넣어준다.
+- Experiments
+    - Dataset: Places2, CelebA faces,  CelebAHQ faces, DTD textures, ImageNet
+    - Qualitive comparisons
+    - Attention map이 주변 정보를 가져와 synthesis와 generation에 도움을 준다.
+    - Quantitative comparisons
+        - L1 loss, L2 loss, PSNR(Peak Signal-to-Noise Ratio), TV(Total Variation) loss
+    - 2.9M parameters, Tensorflow v1.3, CUDNN v6.0, CUDA v8.0, hardware with CPU Intel(R) Xeon(R) CPU E5-2697 v3 (2.60GHz) and GPU GTX 1080 Ti
+    - 0.2 seconds per frame on GPU and 1.5 seconds per frame on CPU for images of resolution 512 × 512 on average
+- Ablation study
+    - Contextual attention vs. spatial transformer network and appearance flow
+    - Choice of the GAN loss for image inpainting
+    - Essential reconstruction loss
+    - Perceptual loss, style loss and total variation loss
