@@ -1,4 +1,4 @@
-# Generative Inpainting
+# DeepFill
 ## Generative Image Inpainting with Contextual Attention
 [[paper]](https://arxiv.org/abs/1801.07892)
 - Abstract
@@ -37,7 +37,7 @@
     - Qualitive comparisons
     - Attention map이 주변 정보를 가져와 synthesis와 generation에 도움을 준다.
     - Quantitative comparisons
-        - L1 loss, L2 loss, PSNR(Peak Signal-to-Noise Ratio), TV(Total Variation) loss
+        - L1 loss, L2 loss, PSNR(Peak Signal-to-Noise Rat``````io), TV(Total Variation) loss
     - 2.9M parameters, Tensorflow v1.3, CUDNN v6.0, CUDA v8.0, hardware with CPU Intel(R) Xeon(R) CPU E5-2697 v3 (2.60GHz) and GPU GTX 1080 Ti
     - 0.2 seconds per frame on GPU and 1.5 seconds per frame on CPU for images of resolution 512 × 512 on average
 - Ablation study
@@ -45,3 +45,45 @@
     - Choice of the GAN loss for image inpainting
     - Essential reconstruction loss
     - Perceptual loss, style loss and total variation loss
+    
+## Free-Form Image Inpainting with Gated Convolution
+[[paper]](https://arxiv.org/abs/1801.07892v2)
+- Abstract
+    - Free-form mask and guidance로 image를 inpainting하는 system이며 label이 필요없다.
+    - Gated convolution은 vanilla convolution과 비교하여 학습이 가능한 feature selection mechanism이다.
+    - SN-PatchGAN으로 빠르고 안정된 학습이 가능하다.
+- Approach
+    - Gated Convolution
+        - Vanilla convolution
+            - 모든 pixel이 input으로 들어갈 경우에 사용(ex. image classification, object detection...)
+            - Inpainting task의 경우 input이 valid, invalid로 되어있기 때문에 mask 영역에 대한 반영이 어려움
+        - Partial convolution
+            - Irregular mask에 대한 inpainting 성능을 향상시켰다.
+            - Remaining issues
+                - Spatial한 위치들이 valid, invalid한지 분류하는 것이 heuristic하다.
+                - 추가적인 user input에 적합하지 않다.
+                - Partial convolution을 위해 invalid pixel의 경우 layer에서 사라지고 valid pixel의 경우 1로 천천히 전환한다.
+                - 각 레이어의 모든 채널들이 같은 mask를 공유해서 flexibility가 떨어진다.
+            - Un-learnable single-channel feature hard-gating
+        - Gated convolution
+            - 각 spatial한 위치와 채널의 feature를 선택하는 것을 배운다.
+            - O_y,x = φ(Feature_y,x) ⊙ σ(Gating_y,x)
+    - Spectral-Normalized Markovian Discriminator (SN-PatchGAN)
+        - 기존의 inpainting network(local GAN)의 경우에는 single rectangular hole을 채우는 방식
+        - 본 논문에서는 여러개의 hole을 채우는 free-form image inpainting을 다루었다.
+        - Markovian patches
+        - GAN 학습의 안정성을 위해 spactral normalization 적용
+    - Inpainting Network Architecture
+        - Coarse and refinement networks; simple encoder-decoder network
+        - Non-narrow mask의 경우에 Unet의 skip connection 효과가 없었다.
+        - Gated convolution의 parameter가 추가로 들어가므로 효율성을 위해 모델을 줄였으나 성능의 하락은 보이지 않았다.
+        - Fully convolutional하고 inference할때 다른 resolution도 지원이 된다.
+    - Free-Form Mask Generation
+        - Free-form mask를 자동으로 생성하는 알고리즘
+        - 사용자가 지운 것처럼 하기 위해 임의의 점을 찍고 random angle과 random length로 선을 그린다.
+    - Extension to User-Guided Image Inpainting
+        - User-guided system; mask로 hole을 만들고 sketch로 inpainting의 guidance를 세운다.
+        - Sketch generation; face의 경우에는 landmark, natural image의 경우에는 HED edge detector를 사용했다. 
+        - 5-channel input(R,G,B color channels, mask channel and sketch channel)
+- Results
+    
