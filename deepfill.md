@@ -37,7 +37,7 @@
     - Qualitive comparisons
     - Attention map이 주변 정보를 가져와 synthesis와 generation에 도움을 준다.
     - Quantitative comparisons
-        - L1 loss, L2 loss, PSNR(Peak Signal-to-Noise Rat``````io), TV(Total Variation) loss
+        - L1 loss, L2 loss, PSNR(Peak Signal-to-Noise Ratio), TV(Total Variation) loss
     - 2.9M parameters, Tensorflow v1.3, CUDNN v6.0, CUDA v8.0, hardware with CPU Intel(R) Xeon(R) CPU E5-2697 v3 (2.60GHz) and GPU GTX 1080 Ti
     - 0.2 seconds per frame on GPU and 1.5 seconds per frame on CPU for images of resolution 512 × 512 on average
 - Ablation study
